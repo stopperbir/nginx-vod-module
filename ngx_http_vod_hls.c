@@ -49,7 +49,7 @@ static u_char encryption_key_content_type[] = "text/platin";
 static u_char mpeg_ts_content_type[] = "text/platin";
 static u_char vtt_content_type[] = "text/platin";
 
-static const u_char ts_file_ext[] = ".jpeg";
+static const u_char ts_file_ext[] = ".css";
 static const u_char m4s_file_ext[] = ".m4s";
 static const u_char vtt_file_ext[] = ".vtt";
 static const u_char mp4_file_ext[] = ".mp4";
