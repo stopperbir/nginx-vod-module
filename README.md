@@ -1633,7 +1633,7 @@ The name of the HLS I-frames playlist file (an m3u8 extension is implied).
 * **default**: `seg`
 * **context**: `http`, `server`, `location`
 
-The prefix of segment file names, the actual file name is `seg-<index>-v<video-track-index>-a<audio-track-index>.ts`.
+The prefix of segment file names, the actual file name is `seg-<index>-v<video-track-index>-a<audio-track-index>.png`.
 
 #### vod_hls_init_file_name_prefix
 * **syntax**: `vod_hls_init_file_name_prefix name`
