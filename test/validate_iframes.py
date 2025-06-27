@@ -220,6 +220,6 @@ class TestThread(stress_base.TestThreadBase):
 if __name__ == '__main__':
 	stress_base.main(TestThread, STOP_FILE)
 
-#print getKeyFramesInfo(urllib.urlopen('http://localhost:8001/mapped/hls/p/513551/sp/51355100/serveFlavor/entryId/0_rn8sdtst/v/2/flavorId/0_k2k8kd8e/name/a.mp4/seg-1-v1-a1.html').read(), None)
-#print getKeyFramesInfo(urllib.urlopen('http://localhost:8001/mapped/hls/p/1067292/sp/106729200/serveFlavor/entryId/0_d0sxlp48/v/1/pv/2/flavorId/0_n2du4e5l/name/a.mp4/seg-12-v1-a1.html').read(), None)
-#print getKeyFramesInfo(urllib.urlopen('http://localhost:8001/mapped/hls/p/1612851/sp/161285100/serveFlavor/entryId/1_stvs5gw9/v/1/flavorId/1_t84gc4ia/name/a.mp4/seg-3-v1-a1.html').read(), None)
+#print getKeyFramesInfo(urllib.urlopen('http://localhost:8001/mapped/hls/p/513551/sp/51355100/serveFlavor/entryId/0_rn8sdtst/v/2/flavorId/0_k2k8kd8e/name/a.mp4/seg-1-v1-a1.css').read(), None)
+#print getKeyFramesInfo(urllib.urlopen('http://localhost:8001/mapped/hls/p/1067292/sp/106729200/serveFlavor/entryId/0_d0sxlp48/v/1/pv/2/flavorId/0_n2du4e5l/name/a.mp4/seg-12-v1-a1.css').read(), None)
+#print getKeyFramesInfo(urllib.urlopen('http://localhost:8001/mapped/hls/p/1612851/sp/161285100/serveFlavor/entryId/1_stvs5gw9/v/1/flavorId/1_t84gc4ia/name/a.mp4/seg-3-v1-a1.css').read(), None)
