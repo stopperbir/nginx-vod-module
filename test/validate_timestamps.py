@@ -219,7 +219,7 @@ def getHlsFragmentInfo(url, fileIndex):
 	if audioPacket != None:
 		adtsCounts.append(countAdtsPackets(audioPacket))
 	urlFilename = url.split('?')[0].rsplit('/', 1)[-1]
-	urlFilename = urlFilename.replace('-v1', '').replace('-a1', '').replace('-Seg1-Frag', '-').replace('.css', '')
+	urlFilename = urlFilename.replace('-v1', '').replace('-a1', '').replace('-Seg1-Frag', '-').replace('-css', '')
 	if fileIndex > 0:
 		segIndex = urlFilename.split('-')[1]
 	else:
@@ -234,7 +234,7 @@ def getHlsFragmentsInfo(urls):
 		baseUrl = url.rsplit('/', 1)[0]
 		if urlPath.endswith('.m3u8') and not baseUrl.endswith('.urlset/'):
 			baseUrls.append(baseUrl)
-		if not urlPath.endswith('.css'):
+		if not urlPath.endswith('-css'):
 			continue
 		print('.', end=' ')
 		if baseUrl in baseUrls:

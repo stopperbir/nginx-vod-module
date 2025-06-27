@@ -43,7 +43,7 @@ HLS_PREFIX = '/hls'
 HLS_MASTER_FILE = '/master.m3u8'
 HLS_PLAYLIST_FILE = '/index.m3u8'
 HLS_IFRAMES_FILE = '/iframes.m3u8'
-HLS_SEGMENT_FILE = '/seg-1.css'
+HLS_SEGMENT_FILE = '/seg-1-css'
 
 MSS_PREFIX = '/mss'
 MSS_MANIFEST_FILE = '/manifest'
@@ -81,7 +81,7 @@ M3U8_PREFIX_ENCRYPTED_PART2 = '''encryption.key"
 M3U8_POSTFIX = '#EXT-X-ENDLIST\n'
 M3U8_EXTINF = '#EXTINF:'
 M3U8_SEGMENT_PREFIX = 'seg-'
-M3U8_SEGMENT_POSTFIX = '.css'
+M3U8_SEGMENT_POSTFIX = '-css'
 SERVER_NAME = 'localhost'
 
 DASH_REQUESTS = [
@@ -437,19 +437,19 @@ class HlsTestSuite(ProtocolTestSuite):
 
     # bad requests
     def testBadSegmentIndex(self):
-        assertRequestFails(self.getUrl('/seg-abc-a1-v1.css'), 400)
+        assertRequestFails(self.getUrl('/seg-abc-a1-v1-css'), 400)
         self.logTracker.assertContains('failed to parse segment index')
 
     def testBadStreamIndex(self):
-        assertRequestFails(self.getUrl('/seg-1-aabc-v1.css'), 400)
+        assertRequestFails(self.getUrl('/seg-1-aabc-v1-css'), 400)
         self.logTracker.assertContains('did not consume the whole name')
 
     def testBadStreamType(self):
-        assertRequestFails(self.getUrl('/seg-1-a1-z1.css'), 400)
+        assertRequestFails(self.getUrl('/seg-1-a1-z1-css'), 400)
         self.logTracker.assertContains('did not consume the whole name')
 
     def testUnrecognizedTSRequest(self):
-        assertRequestFails(self.getUrl('/bla-1-a1-v1.css'), 400)
+        assertRequestFails(self.getUrl('/bla-1-a1-v1-css'), 400)
         self.logTracker.assertContains('unidentified request')
 
     def testUnrecognizedM3U8Request(self):
@@ -592,7 +592,7 @@ class BasicTestSuite(TestSuite):
         assertEquals(clippedResponse.count(M3U8_EXTINF), 1)
 
         # segment
-        assertRequestFails(self.getUrl(HLS_PREFIX, '/clipTo/10000/seg-2-a1-v1.css'), 404)
+        assertRequestFails(self.getUrl(HLS_PREFIX, '/clipTo/10000/seg-2-a1-v1-css'), 404)
 
         # iframes
         fullResponse = urllib2.urlopen(self.getUrl(HLS_PREFIX, HLS_IFRAMES_FILE)).read()
@@ -608,7 +608,7 @@ class BasicTestSuite(TestSuite):
         assertEquals(clippedResponse.count(M3U8_EXTINF) + 1, fullResponse.count(M3U8_EXTINF))
 
         # segment
-        assertRequestFails(self.getUrl(HLS_PREFIX, '/clipFrom/10000/seg-%s-a1-v1.css' % fullResponse.count(M3U8_EXTINF)), 404)
+        assertRequestFails(self.getUrl(HLS_PREFIX, '/clipFrom/10000/seg-%s-a1-v1-css' % fullResponse.count(M3U8_EXTINF)), 404)
 
         # iframes
         fullResponse = urllib2.urlopen(self.getUrl(HLS_PREFIX, HLS_IFRAMES_FILE)).read()
@@ -638,11 +638,11 @@ class BasicTestSuite(TestSuite):
 
     # bad requests
     def testPostRequest(self):
-        assertRequestFails(self.getUrl(HLS_PREFIX, '/seg-1-a1-v1.css'), 405, postData='abcd')
+        assertRequestFails(self.getUrl(HLS_PREFIX, '/seg-1-a1-v1-css'), 405, postData='abcd')
         self.logTracker.assertContains('unsupported method')
 
     def testSegmentIdTooBig(self):
-        assertRequestFails(self.getUrl(HLS_PREFIX, '/seg-3600-a1-v1.css'), 404)
+        assertRequestFails(self.getUrl(HLS_PREFIX, '/seg-3600-a1-v1-css'), 404)
         self.logTracker.assertContains('no matching streams were found, probably invalid segment index')
 
     def testNonExistingTracksM3U8(self):
@@ -650,7 +650,7 @@ class BasicTestSuite(TestSuite):
         self.logTracker.assertContains('no matching streams were found')
 
     def testNonExistingTracksTS(self):
-        assertRequestFails(self.getUrl(HLS_PREFIX,  '/seg-1-a10-v10.css'), 404)
+        assertRequestFails(self.getUrl(HLS_PREFIX,  '/seg-1-a10-v10-css'), 404)
         self.logTracker.assertContains('no matching streams were found, probably invalid segment index')
 
     def testClipToLargerThanClipFrom(self):
