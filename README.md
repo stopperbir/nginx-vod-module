@@ -228,7 +228,7 @@ Where:
   * hls master playlist - master.m3u8
   * hls media playlist - index.m3u8
   * mss - manifest
-  * thumb - `thumb-<offset>[<resizeparams>]-css` (offset is the thumbnail video offset in milliseconds)
+  * thumb - `thumb-<offset>[<resizeparams>].css` (offset is the thumbnail video offset in milliseconds)
   * volume_map - `volume_map.csv`
 * seqparams - can be used to select specific sequences by id (provided in the mapping JSON), e.g. master-sseq1.m3u8.
 * fileparams - can be used to select specific sequences by index when using multi URLs.
@@ -241,7 +241,7 @@ Where:
 	The a/v parameters can be combined with f/s, e.g. f1-v1-f2-a1 = video1 of file1 + audio1 of file2, f1-f2-v1 = video1 of file1 + video1 of file2.
 * langparams - can be used to filter audio tracks/subtitles according to their language (ISO639-3 code).
 	For example, master-leng.m3u8 will return only english audio tracks.
-* resizeparams - can be used to resize the returned thumbnail image. For example, thumb-1000-w150-h100-css captures a thumbnail
+* resizeparams - can be used to resize the returned thumbnail image. For example, thumb-1000-w150-h100.css captures a thumbnail
 	1 second into the video, and resizes it to 150x100. If one of the dimensions is omitted, its value is set so that the 
 	resulting image will retain the aspect ratio of the video frame.
 
@@ -1633,7 +1633,7 @@ The name of the HLS I-frames playlist file (an m3u8 extension is implied).
 * **default**: `seg`
 * **context**: `http`, `server`, `location`
 
-The prefix of segment file names, the actual file name is `seg-<index>-v<video-track-index>-a<audio-track-index>-css`.
+The prefix of segment file names, the actual file name is `seg-<index>-v<video-track-index>-a<audio-track-index>.css`.
 
 #### vod_hls_init_file_name_prefix
 * **syntax**: `vod_hls_init_file_name_prefix name`

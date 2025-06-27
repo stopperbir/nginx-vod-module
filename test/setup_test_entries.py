@@ -155,23 +155,23 @@ TEST_CASES = [
         ('', 'clipTo/10000/a.mp4', 404, 'is smaller than moov size'),
     ]),
     ('TRUNCATED_MDAT', lambda: truncateFile(getAtomPos('mdat') + 1000), [
-        ('/hls', 'seg-1-css', 0, 'no data was handled, probably a truncated file'),
+        ('/hls', 'seg-1.css', 0, 'no data was handled, probably a truncated file'),
         ('', 'clipTo/10000/a.mp4', 200, 'probably a truncated file'),
     ]),
     ('NO_EXTRA_DATA', lambda: StringReader(inputData.replace('esds', 'blah').replace('avcC', 'blah')), [
-        ('/hls', 'seg-1-css', 404, 'no extra data was parsed for track'),
+        ('/hls', 'seg-1.css', 404, 'no extra data was parsed for track'),
         ('', 'clipTo/10000/a.mp4', 200, None),
     ]),
     ('UNRECOGNIZED_FORMAT', lambda: StringReader('x' * 0x5000), [
-        ('/hls', 'seg-1-css', 404, 'failed to identify the file format'),
+        ('/hls', 'seg-1.css', 404, 'failed to identify the file format'),
         ('', 'clipTo/10000/a.mp4', 404, 'failed to identify the file format'),
     ]),
     ('MOOV_READ_ATTEMPTS', lambda: StringReader((struct.pack('>L', 0x1008) + 'mdat' + '\0' * 0x1000) * 5), [
-        ('/hls', 'seg-1-css', 404, 'exhausted all moov read attempts'),
+        ('/hls', 'seg-1.css', 404, 'exhausted all moov read attempts'),
         ('', 'clipTo/10000/a.mp4', 404, 'exhausted all moov read attempts'),
     ]),
     ('NO_ATOM_PARSED', lambda: StringReader(struct.pack('>L', 8) + 'ftyp' + struct.pack('>L', 7) + 'moov'), [
-        ('/hls', 'seg-1-css', 404, 'is smaller than the buffer size'),
+        ('/hls', 'seg-1.css', 404, 'is smaller than the buffer size'),
         ('', 'clipTo/10000/a.mp4', 404, 'is smaller than the buffer size'),
     ]),
     
@@ -208,112 +208,112 @@ TEST_CASES = [
     ]),
     # stts
     ('STTS_TOO_SMALL', lambda: truncateAtom('moov.trak.mdia.minf.stbl.stts', 4), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_validate_stts_data: atom size 4 too small'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_validate_stts_data: atom size 4 too small'),
         ('', 'clipTo/10000/a.mp4', 404, 'mp4_parser_validate_stts_data: atom size 4 too small'),
     ]),
     ('STTS_ENTRIES_TOO_BIG', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stts') + 4, struct.pack('>L', 1000000000)), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_validate_stts_data: number of entries 1000000000 too big'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_validate_stts_data: number of entries 1000000000 too big'),
         ('', 'clipTo/10000/a.mp4', 404, 'mp4_parser_validate_stts_data: number of entries 1000000000 too big'),
     ]),
     ('STTS_CANT_HOLD', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stts') + 4, struct.pack('>L', 100000000)), [
-        ('/hls', 'seg-1-css', 404, 'too small to hold 100000000 entries'),
+        ('/hls', 'seg-1.css', 404, 'too small to hold 100000000 entries'),
         ('', 'clipTo/10000/a.mp4', 404, 'too small to hold 100000000 entries'),
     ]),
     ('STTS_INITIAL_ALLOC_BIG', lambda: applyPatch(
         getAtomDataPos('moov.trak.mdia.minf.stbl.stts') + 4, struct.pack('>LLL', 1, 10000000, 1),
         getTimeScaleOffset(), struct.pack('>L', 100000)), [
-        ('/hls', 'seg-1-css', 404, 'initial alloc size 1000001 exceeds the max frame count'),
+        ('/hls', 'seg-1.css', 404, 'initial alloc size 1000001 exceeds the max frame count'),
     ]),
     # stco
     ('STCO_TOO_SMALL', lambda: truncateAtom('moov.trak.mdia.minf.stbl.stco', 4), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_validate_stco_data: atom size 4 too small'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_validate_stco_data: atom size 4 too small'),
         ('', 'clipTo/10000/a.mp4', 404, 'mp4_clipper_stco_init_chunk_count: atom size 4 too small'),
     ]),
     ('STCO_ENTRIES_TOO_BIG', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stco') + 4, struct.pack('>L', 1000000000)), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_validate_stco_data: number of entries 1000000000 too big'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_validate_stco_data: number of entries 1000000000 too big'),
         ('', 'clipTo/10000/a.mp4', 404, 'mp4_parser_validate_stco_data: number of entries 1000000000 too big'),
     ]),
     ('STCO_CANT_HOLD', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stco') + 4, struct.pack('>L', 100000000)), [
-        ('/hls', 'seg-1-css', 404, 'too small to hold 100000000 entries'),
+        ('/hls', 'seg-1.css', 404, 'too small to hold 100000000 entries'),
         ('', 'clipTo/10000/a.mp4', 404, 'too small to hold 100000000 entries'),
     ]),
     ('STCO_TOO_FEW_ENTRIES', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stco') + 4, struct.pack('>L', 0)), [
-        ('/hls', 'seg-1-css', 404, 'number of entries 0 smaller than last'),
+        ('/hls', 'seg-1.css', 404, 'number of entries 0 smaller than last'),
         ('', 'clipTo/10000/a.mp4', 404, 'number of entries 0 smaller than last'),
     ]),
     # stsc
     ('STSC_TOO_SMALL', lambda: truncateAtom('moov.trak.mdia.minf.stbl.stsc', 4), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_validate_stsc_atom: atom size 4 too small'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_validate_stsc_atom: atom size 4 too small'),
         ('', 'clipTo/10000/a.mp4', 404, 'mp4_parser_validate_stsc_atom: atom size 4 too small'),
     ]),
     ('STSC_ENTRIES_TOO_BIG', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stsc') + 4, struct.pack('>L', 1000000000)), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_validate_stsc_atom: number of entries 1000000000 too big'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_validate_stsc_atom: number of entries 1000000000 too big'),
         ('', 'clipTo/10000/a.mp4', 404, 'mp4_parser_validate_stsc_atom: number of entries 1000000000 too big'),
     ]),
     ('STSC_CANT_HOLD', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stsc') + 4, struct.pack('>L', 100000000)), [
-        ('/hls', 'seg-1-css', 404, 'too small to hold 100000000 entries'),
+        ('/hls', 'seg-1.css', 404, 'too small to hold 100000000 entries'),
         ('', 'clipTo/10000/a.mp4', 404, 'too small to hold 100000000 entries'),
     ]),
     ('STSC_ZERO_CHUNK_INDEX', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stsc') + 8, struct.pack('>L', 0)), [
-        ('/hls', 'seg-1-css', 404, 'first chunk index is not 1'),
+        ('/hls', 'seg-1.css', 404, 'first chunk index is not 1'),
         ('', 'clipTo/10000/a.mp4', 404, 'chunk index is zero'),
     ]),
     ('STSC_INVALID_SPC', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stsc') + 4, struct.pack('>LLL', 1, 1, 0)), [
-        ('/hls', 'seg-1-css', 404, 'samples per chunk is zero'),
+        ('/hls', 'seg-1.css', 404, 'samples per chunk is zero'),
         ('', 'clipTo/10000/a.mp4', 404, 'samples per chunk is zero'),
     ]),
     # stsz
     ('STSZ_TOO_SMALL', lambda: truncateAtom('moov.trak.mdia.minf.stbl.stsz', 4), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_validate_stsz_atom: atom size 4 too small'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_validate_stsz_atom: atom size 4 too small'),
         ('', 'clipTo/10000/a.mp4', 404, 'mp4_parser_validate_stsz_atom: atom size 4 too small'),
     ]),
     ('STSZ_UNIFORM_SIZE_BIG', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stsz') + 4, struct.pack('>L', 100000000)), [
-        ('/hls', 'seg-1-css', 404, 'uniform size 100000000 is too big'),
+        ('/hls', 'seg-1.css', 404, 'uniform size 100000000 is too big'),
         ('', 'clipTo/10000/a.mp4', 404, 'uniform size 100000000 is too big'),
     ]),
     ('STSZ_ENTRIES_TOO_SMALL', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stsz') + 8, struct.pack('>L', 1)), [
-        ('/hls', 'seg-1-css', 404, 'number of entries 1 smaller than last frame'),
+        ('/hls', 'seg-1.css', 404, 'number of entries 1 smaller than last frame'),
         ('', 'clipTo/10000/a.mp4', 404, 'number of entries 1 smaller than last frame'),
     ]),
     ('STSZ_ENTRIES_TOO_BIG', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stsz') + 8, struct.pack('>L', 1000000000)), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_validate_stsz_atom: number of entries 1000000000 too big'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_validate_stsz_atom: number of entries 1000000000 too big'),
         ('', 'clipTo/10000/a.mp4', 404, 'mp4_parser_validate_stsz_atom: number of entries 1000000000 too big'),
     ]),
     ('STSZ_CANT_HOLD', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stsz') + 8, struct.pack('>L', 50000000)), [
-        ('/hls', 'seg-1-css', 404, 'too small to hold 50000000 entries'),
+        ('/hls', 'seg-1.css', 404, 'too small to hold 50000000 entries'),
         ('', 'clipTo/10000/a.mp4', 404, 'too small to hold 50000000 entries'),
     ]),
     ('STSZ_FRAME_TOO_BIG', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stsz') + 12, struct.pack('>L', 100000000)), [
-        ('/hls', 'seg-1-css', 404, 'frame size 100000000 too big'),
+        ('/hls', 'seg-1.css', 404, 'frame size 100000000 too big'),
     ]),
     # stss
     ('STSS_TOO_SMALL', lambda: truncateAtom('moov.trak.mdia.minf.stbl.stss', 4), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_validate_stss_atom: atom size 4 too small'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_validate_stss_atom: atom size 4 too small'),
         ('', 'clipTo/10000/a.mp4', 404, 'mp4_parser_validate_stss_atom: atom size 4 too small'),
     ]),
     ('STSS_ENTRIES_TOO_BIG', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stss') + 4, struct.pack('>L', 1000000000)), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_validate_stss_atom: number of entries 1000000000 too big'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_validate_stss_atom: number of entries 1000000000 too big'),
         ('', 'clipTo/10000/a.mp4', 404, 'mp4_parser_validate_stss_atom: number of entries 1000000000 too big'),
     ]),
     ('STSS_CANT_HOLD', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.stss') + 4, struct.pack('>L', 100000000)), [
-        ('/hls', 'seg-1-css', 404, 'too small to hold 100000000 entries'),
+        ('/hls', 'seg-1.css', 404, 'too small to hold 100000000 entries'),
         ('', 'clipTo/10000/a.mp4', 404, 'too small to hold 100000000 entries'),
     ]),
     # stsd
     ('STSD_TOO_SMALL', lambda: truncateAtom('moov.trak.mdia.minf.stbl.stsd', 4), [
-        ('/hls', 'seg-1-css', 404, 'mp4_parser_parse_stsd_atom: atom size 4 too small'),
+        ('/hls', 'seg-1.css', 404, 'mp4_parser_parse_stsd_atom: atom size 4 too small'),
     ]),
     ('STSD_NO_ROOM_FOR_ENTRY', lambda: truncateAtom('moov.trak.mdia.minf.stbl.stsd', 12), [
-        ('/hls', 'seg-1-css', 404, 'not enough room for stsd entry'),
+        ('/hls', 'seg-1.css', 404, 'not enough room for stsd entry'),
     ]),
 ]
 
 if atomExists('moov.trak.mdia.minf.stbl.ctts'):
     TEST_CASES += [
         # ctts
-        ('CTTS_TOO_SMALL', lambda: truncateAtom('moov.trak.mdia.minf.stbl.ctts', 4), 'mp4_parser_validate_ctts_atom: atom size 4 too small', 'seg-1-css', 404),
-        ('CTTS_ENTRIES_TOO_BIG', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.ctts') + 4, struct.pack('>L', 1000000000)), 'mp4_parser_validate_ctts_atom: number of entries 1000000000 too big', 'seg-1-css', 404),
-        ('CTTS_CANT_HOLD', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.ctts') + 4, struct.pack('>L', 100000000)), 'too small to hold 100000000 entries', 'seg-1-css', 404),
+        ('CTTS_TOO_SMALL', lambda: truncateAtom('moov.trak.mdia.minf.stbl.ctts', 4), 'mp4_parser_validate_ctts_atom: atom size 4 too small', 'seg-1.css', 404),
+        ('CTTS_ENTRIES_TOO_BIG', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.ctts') + 4, struct.pack('>L', 1000000000)), 'mp4_parser_validate_ctts_atom: number of entries 1000000000 too big', 'seg-1.css', 404),
+        ('CTTS_CANT_HOLD', lambda: applyPatch(getAtomDataPos('moov.trak.mdia.minf.stbl.ctts') + 4, struct.pack('>L', 100000000)), 'too small to hold 100000000 entries', 'seg-1.css', 404),
     ]
 
 def uploadTestEntry(refId, generator):
