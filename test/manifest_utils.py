@@ -348,7 +348,7 @@ def getMssManifestUrls(baseUrl, urlContent, headers):
 PARSER_BY_MIME_TYPE = {
 	'application/dash+xml': getDashManifestUrls,
 	'video/f4m': getHdsManifestUrls,
-	'application/vnd.apple.mpegurl': getHlsMasterPlaylistUrls,
+	'text/plain': getHlsMasterPlaylistUrls,
 	'application/x-mpegurl': getHlsMasterPlaylistUrls,
 	'text/xml': getMssManifestUrls,
 }

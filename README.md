@@ -844,7 +844,7 @@ Following is a list of configurations that were tested and found working:
 	* HLS - set `vod_hls_mpegts_align_frames` to off and `vod_hls_mpegts_interleave_frames` to on
 7. Enable gzip compression on manifest responses - 
 
-	`gzip_types application/vnd.apple.mpegurl video/f4m application/dash+xml text/xml`
+	`gzip_types text/plain video/f4m application/dash+xml text/xml`
 8. Apply common nginx performance best practices, such as tcp_nodelay=on, client_header_timeout etc.
 
 ### Configuration directives - base
@@ -1870,7 +1870,7 @@ Note: Configuration directives that can accept variables are explicitly marked a
 			
 			# gzip manifests
 			gzip on;
-			gzip_types application/vnd.apple.mpegurl;
+			gzip_types text/plain;
 
 			# file handle caching / aio
 			open_file_cache          max=1000 inactive=5m;
@@ -1926,7 +1926,7 @@ Note: Configuration directives that can accept variables are explicitly marked a
 			
 			# gzip manifests
 			gzip on;
-			gzip_types application/vnd.apple.mpegurl;
+			gzip_types text/plain;
 
 			# file handle caching / aio
 			open_file_cache          max=1000 inactive=5m;
@@ -1986,7 +1986,7 @@ Note: Configuration directives that can accept variables are explicitly marked a
 
 			# gzip manifests
 			gzip on;
-			gzip_types application/vnd.apple.mpegurl;
+			gzip_types text/plain;
 
 			# file handle caching / aio
 			open_file_cache	  max=1000 inactive=5m;
@@ -2054,7 +2054,7 @@ And use this stream URL - http://nginx-vod-server/hls/test.json/master.m3u8
 			
 			# gzip manifests
 			gzip on;
-			gzip_types application/vnd.apple.mpegurl;
+			gzip_types text/plain;
 			
 			location ^~ /kalapi/ {
 				internal;

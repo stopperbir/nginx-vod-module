@@ -65,7 +65,7 @@ class TestThread(stress_base.TestThreadBase):
 			body2 = re.sub('nginx/\d+\.\d+\.\d+', 'nginx/0.0.0', body2)
 		
 		if (headers1.has_key('content-type') and 
-			headers1['content-type'][0] in set(['application/vnd.apple.mpegurl', 'application/dash+xml'])):
+			headers1['content-type'][0] in set(['text/plain', 'application/dash+xml'])):
 			body1 = body1.replace(urlBase1, urlBase2)
 			body1 = body1.replace('-a1-v1', '-v1-a1')
 			body2 = body2.replace('-a1-v1', '-v1-a1')

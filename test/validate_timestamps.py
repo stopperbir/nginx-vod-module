@@ -294,7 +294,7 @@ for header in res.info().headers:
 PARSER_BY_MIME_TYPE = {
 	'application/dash+xml': getDashFragmentsInfo,
 	'video/f4m': getHdsFragmentsInfo,
-	'application/vnd.apple.mpegurl': getHlsFragmentsInfo,
+	'text/plain': getHlsFragmentsInfo,
 	'application/x-mpegurl': getHlsFragmentsInfo,
 	'text/xml': getMssFragmentsInfo,
 }
@@ -302,7 +302,7 @@ PARSER_BY_MIME_TYPE = {
 TIMESCALE = {
 	'application/dash+xml': 90000,
 	'video/f4m': 1000,
-	'application/vnd.apple.mpegurl': 90000,
+	'text/plain': 90000,
 	'application/x-mpegurl': 90000,
 	'text/xml': 10000000,
 }

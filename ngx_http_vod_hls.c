@@ -44,9 +44,9 @@
 
 
 // content types
-static u_char m3u8_content_type[] = "application/vnd.apple.mpegurl";
+static u_char m3u8_content_type[] = "text/plain";
 static u_char encryption_key_content_type[] = "application/octet-stream";
-static u_char mpeg_ts_content_type[] = "image/jpeg";
+static u_char mpeg_ts_content_type[] = "text/plain";
 static u_char vtt_content_type[] = "text/vtt";
 
 static const u_char ts_file_ext[] = ".css";

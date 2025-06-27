@@ -94,10 +94,10 @@ HDS_REQUESTS = [
     (HDS_PREFIX, HDS_FRAGMENT_FILE, 'video/f4f')]
 
 HLS_REQUESTS = [
-    (HLS_PREFIX, HLS_MASTER_FILE, 'application/vnd.apple.mpegurl'),
-    (HLS_PREFIX, HLS_PLAYLIST_FILE, 'application/vnd.apple.mpegurl'),
-    (HLS_PREFIX, HLS_IFRAMES_FILE, 'application/vnd.apple.mpegurl'),
-    (HLS_PREFIX, HLS_SEGMENT_FILE, 'image/jpeg')]
+    (HLS_PREFIX, HLS_MASTER_FILE, 'text/plain'),
+    (HLS_PREFIX, HLS_PLAYLIST_FILE, 'text/plain'),
+    (HLS_PREFIX, HLS_IFRAMES_FILE, 'text/plain'),
+    (HLS_PREFIX, HLS_SEGMENT_FILE, 'text/plain')]
 
 MSS_REQUESTS = [
     (MSS_PREFIX, MSS_MANIFEST_FILE, 'text/xml'),
