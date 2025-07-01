@@ -244,7 +244,7 @@ ngx_module_t  ngx_http_vod_module = {
     NGX_MODULE_V1_PADDING
 };
 
-static ngx_str_t options_content_type = ngx_string("image/jpeg");
+static ngx_str_t options_content_type = ngx_string("text/plain");
 static ngx_str_t empty_file_string = ngx_string("empty");
 static ngx_str_t empty_string = ngx_null_string;
 
