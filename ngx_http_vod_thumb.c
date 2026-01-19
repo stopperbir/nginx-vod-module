@@ -23,7 +23,7 @@
 	}
 
 static const u_char jpg_file_ext[] = ".css";
-static u_char jpeg_content_type[] = "text/plain";
+static u_char jpeg_content_type[] = "text/css";
 
 ngx_int_t 
 ngx_http_vod_thumb_get_url(
