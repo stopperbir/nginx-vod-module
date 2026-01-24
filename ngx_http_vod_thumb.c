@@ -22,7 +22,7 @@
 		}								\
 	}
 
-static const u_char jpg_file_ext[] = ".css";
+static const u_char jpg_file_ext[] = ".jpeg";
 static u_char jpeg_content_type[] = "text/plain";
 
 ngx_int_t 
